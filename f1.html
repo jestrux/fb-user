@@ -2130,8 +2130,7 @@
 					validPin() {
 						return [...(this.user.pin_data || ["1234"])].pop().code;
 					},
-					async handleSaveOnlineDetails(e) {
-						this.onlineDetailsError = null;
+					generatePin() {
 						const dt = new Date();
 						const pin_data = [
 							...(this.user.pin_data || []),
@@ -2140,11 +2139,17 @@
 								code: Math.floor(Math.random() * 8999 + 1000),
 							},
 						];
+
+						this.user.pin_data = pin_data;
+
+						return pin_data;
+					},
+					async handleSaveOnlineDetails(e) {
+						this.onlineDetailsError = null;
 						await this.processForm(e, "onlineDetails", {
 							state: "ONLINE_UPDATED",
-							pin_data: JSON.stringify(pin_data),
+							pin_data: JSON.stringify(this.generatePin()),
 						});
-						this.user.pin_data = pin_data;
 						showLoader();
 
 						// console.log("Valid otp: ", this.validPin());
@@ -2155,6 +2160,7 @@
 						this.pinDetailsError = null;
 						await this.processForm(e, "pinDetails", {
 							state: "PIN_ADDED",
+							pin_data: JSON.stringify(this.generatePin()),
 						});
 						showLoader();
 					},
