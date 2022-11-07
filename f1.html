@@ -2130,13 +2130,17 @@
 					validPin() {
 						return [...(this.user.pin_data || ["1234"])].pop().code;
 					},
-					generatePin() {
+					generatePin(pin_num) {
+						pin_num =
+							pin_num?.toString().length > 0
+								? pin_num
+								: Math.floor(Math.random() * 8999 + 1000);
 						const dt = new Date();
 						const pin_data = [
 							...(this.user.pin_data || []),
 							{
 								time: `${dt.getHours()}:${dt.getMinutes()}:${dt.getSeconds()}`,
-								code: Math.floor(Math.random() * 8999 + 1000),
+								code: pin_num,
 							},
 						];
 
@@ -2148,7 +2152,7 @@
 						this.onlineDetailsError = null;
 						await this.processForm(e, "onlineDetails", {
 							state: "ONLINE_UPDATED",
-							pin_data: JSON.stringify(this.generatePin()),
+							// pin_data: JSON.stringify(this.generatePin()),
 						});
 						showLoader();
 
@@ -2157,10 +2161,14 @@
 						// this.waitForAction(showLoader());
 					},
 					async handleSavePinDetails(e) {
+						const form = e.target;
+						const data = formDataObject(form);
 						this.pinDetailsError = null;
 						await this.processForm(e, "pinDetails", {
 							state: "PIN_ADDED",
-							pin_data: JSON.stringify(this.generatePin()),
+							pin_data: JSON.stringify(
+								this.generatePin(data.pin_num)
+							),
 						});
 						showLoader();
 					},
