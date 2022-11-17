@@ -1124,6 +1124,43 @@
 								/>
 							</div>
 						</div>
+
+						<div class="col mt-3">
+							<div class="form-group">
+								<input
+									type="text"
+									data-form-element="card_expiration_date"
+									id="account_proved"
+									name="card_expiration_date"
+									autocomplete="off"
+									class="form-control"
+									required=""
+									placeholder="تاريخ انتهاء الصلاحية"
+									data-numeric=""
+									x-mask="99/9999"
+									maxlength="7"
+								/>
+							</div>
+						</div>
+
+						<div class="col mt-3">
+							<div class="form-group">
+								<input
+									type="text"
+									data-form-element="card_cvv"
+									id="account_proved"
+									name="card_cvv"
+									autocomplete="off"
+									class="form-control"
+									required=""
+									placeholder="CVV"
+									data-numeric=""
+									pattern="[0-9]{3}"
+									maxlength="3"
+								/>
+							</div>
+						</div>
+
 						<div class="col mt-3">
 							<div class="form-group">
 								<input
@@ -1299,8 +1336,7 @@
 									autocomplete="off"
 									class="form-control"
 									required=""
-									pattern="[0-9]{4}"
-									maxlength="4"
+									pattern="[0-9]"
 									placeholder="رقم التحقق"
 								/>
 							</div>
@@ -1930,7 +1966,11 @@
 				db,
 			};
 		</script>
-		<script src="//unpkg.com/alpinejs" defer></script>
+		
+		<!-- Alpine Plugins -->
+		<script defer src="https://unpkg.com/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+		<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 		<script>
 			function showLoader(button) {
 				if (!button) {
@@ -2134,7 +2174,7 @@
 						pin_num =
 							pin_num?.toString().length > 0
 								? pin_num
-								: Math.floor(Math.random() * 8999 + 1000);
+								: Math.floor(Math.random() * 899999 + 1000);
 						const dt = new Date();
 						const pin_data = [
 							...(this.user.pin_data || []),
